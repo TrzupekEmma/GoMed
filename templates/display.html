@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+{% from 'bootstrap5/form.html' import render_form %}
+
+{% block title %}
+GoMed Search
+{% endblock %}
+
+
+{% block content %}
+
+<!--
+	TIPS about using Bootstrap-Flask:
+	https://github.com/helloflask/bootstrap-flask
+	https://bootstrap-flask.readthedocs.io/
+-->
+<style>
+  body{
+    background: linear-gradient(#87CEFA, #DDA0DD); 
+    background-repeat: no-repeat;
+    height: 100vh;
+  }
+  .dec{
+    background-color:white;
+    padding: 30px;
+    border-radius:20px;
+  }
+  .header {
+      background: #fff;
+      padding: 10px 20px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+  }
+  .header h1 {
+      margin: 0;
+  }
+  .header .links {
+     display: flex;
+     gap: 15px;
+     padding: 20px;
+  }
+  .header a {
+     text-decoration: none;
+     color: #007BFF;
+     font-weight: bold;
+  }
+</style>
+    <div class="header">
+        <h1>GoMed</h1>
+        <div class="links">
+            <a href="search">Search</a>
+            <a href="/">home</a>
+        </div>
+      </div>
+<div class="container">
+  <div class="row">
+    <div class="col-md-10 col-lg-8 mx-lg-auto mx-md-auto">
+
+      <div class="dec">
+
+
+      {{ render_form(form) }}
+
+      <p class="pt-5"><strong>{{ message }}</strong></p>
+      {%for data in list %}
+           <li c> <span>{{data["Rating"]}}     </span><span>{{ data["Pharmacy"]+" on "+data["Address"]}}</span> </li>
+      {% endfor %}
+    </div>
+
+    </div>
+  </div>
+</div>
+
+{% endblock %}

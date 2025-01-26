@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% from 'bootstrap5/form.html' import render_form %}
+
+{% block title %}
+GoMed
+{% endblock %}
+
+{% block content %}
+<link rel="stylesheet" href="{{ url_for('static', filename='actor.css') }}">
+<style>
+
+        .header {
+            background: #fff;
+            padding: 10px 20px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .header h1 {
+            margin: 0;
+        }
+        .header .links {
+            display: flex;
+            gap: 15px;
+            padding: 20px;
+        }
+        .header a {
+            text-decoration: none;
+            color: #007BFF;
+            font-weight: bold;
+        }
+</style>
+<div class="header">
+  <h1>GoMed</h1>
+  <div class="links">
+    <a href="/">home</a>
+    <a href="submit">Submit</a>
+  </div>
+</div>
+<div class="container">
+  <div class="row">
+    <div class="col-md-10 col-lg-8 mx-lg-auto mx-md-auto">
+      <h1 class="pt-5 pb-2">Welcome to GoMed!</h1>
+      <div class="form">
+        {{ render_form(form, extra_classes="form") }}
+      </div>
+
+      <p class="pt-5"><strong>{{ message }}</strong></p>
+    </div>
+  </div>
+</div>
+{% endblock %}
+

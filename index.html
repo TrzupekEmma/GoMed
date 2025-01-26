@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login / Signup</title>
+    <link rel="stylesheet" href ="style.css">
+    <script>
+        // Function to handle Login
+        async function login(e) {
+            e.preventDefault();
+
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+
+            const response = await fetch('http://localhost:3000/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ email, password })
+            });
+
+            if (response.ok) {
+                alert('Login successful!');
+            } else {
+                alert('Invalid email or password');
+            }
+        }
+
+        // Function to handle Signup
+        async function signup(e) {
+            e.preventDefault();
+
+            const email = document.getElementById('signupEmail').value;
+            const password = document.getElementById('signupPassword').value;
+
+            // Check if the email already exists by sending the data to the backend
+            const response = await fetch('http://localhost:3000/signup', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ email, password })
+            });
+
+            if (response.ok) {
+                alert('Signup successful! You can now log in.');
+                toggleForms();
+            } else {
+                const errorMessage = await response.text();
+                alert(errorMessage);
+            }
+        }
+
+        // Toggle between login and signup forms
+        function toggleForms() {
+            document.getElementById('loginForm').classList.toggle('hidden');
+            document.getElementById('signupForm').classList.toggle('hidden');
+        }
+    </script>
+    <style>
+        .hidden {
+            display: none;
+        }
+        body{
+        margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: linear-gradient(135deg, #c1f0ff, #d8b9ff);
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            background-color: white;
+            border-radius: 16px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+            width: 350px;
+            padding: 50px;
+            text-align: center;
+        }
+        .container h1 {
+            font-size: 24px;
+            margin-bottom: 2rem;
+        }
+        .container img {
+            width: 50px;
+            margin-bottom: 1.5rem;
+        }
+        .input-group {
+            margin-bottom: 3rem;
+            position: relative;
+        }
+        .input-group input {
+            width: 100%;
+            padding: 7px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+        }
+        .btn {
+            width: 100%;
+            padding: 10px;
+            background: linear-gradient(90deg, #a6e1ff, #d7b9ff);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-bottom: 1rem;
+            transition: background 0.3s ease;
+        }
+        .btn:hover {
+            background: linear-gradient(90deg, #a6e1ff, #b39cff);
+        }
+    </style>
+</head>
+<body>
+    <div class ="container">
+    <h1>Login / Signup</h1>
+
+    <!-- Login Form -->
+    <form id="loginForm" class="form" onsubmit="login(event)">
+        <h2>Login</h2>
+        <div class ="input-group">
+            <input type="email" id="email" placeholder="Email" required><br>
+            <input type="password" id="password" placeholder="Password" required><br>
+        </div>
+        <div class ="btn">
+        <button type="submit">Login</button>
+    </div>
+        <p>Don't have an account? <a href="javascript:void(0);" onclick="toggleForms()">Sign up</a></p>
+    </form>
+
+    <!-- Signup Form -->
+    <form id="signupForm" class="form hidden" onsubmit="signup(event)">
+        <h2>Signup</h2>
+        <input type="email" id="signupEmail" placeholder="Email" required><br>
+        <input type="password" id="signupPassword" placeholder="Password" required><br>
+        <button type="submit">Sign up</button>
+        <p>Already have an account? <a href="javascript:void(0);" onclick="toggleForms()">Login</a></p>
+    </form>
+    </div>
+</body>
+</html>
